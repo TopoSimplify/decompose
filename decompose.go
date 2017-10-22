@@ -13,10 +13,15 @@ type scoreRelationFn func(float64) bool
 
 //Douglas Peucker decomposition at a given threshold
 func DouglasPeucker(self lnr.Linear, scoreRelation scoreRelationFn, gfn geom.GeometryFn) *deque.Deque {
-	var pln = self.Polyline()
-	var hque = deque.NewDeque()
 	var k int
 	var val float64
+	var hque = deque.NewDeque()
+
+	var pln = self.Polyline()
+	if pln == nil {
+		return hque
+	}
+
 	var rg = pln.Range()
 
 	s := stack.NewStack().Push(rg)
