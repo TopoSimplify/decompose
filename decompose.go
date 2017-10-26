@@ -21,6 +21,7 @@ func DouglasPeucker(
 ) *deque.Deque {
 	var k int
 	var val float64
+	var coordinates []*geom.Point
 	var hque = deque.NewDeque()
 
 	if pln == nil {
@@ -32,9 +33,12 @@ func DouglasPeucker(
 
 	for !s.IsEmpty() {
 		rg = s.Pop().(*rng.Range)
-		k, val = scoreFn(pln.Coordinates, rg)
+		coordinates = pln.SubCoordinates(rg)
+		k, val = scoreFn(coordinates)
+		k = rg.Index(k)
+
 		if scoreRelation(val) {
-			hque.Append(node.New(pln.SubCoordinates(rg), rg, gfn))
+			hque.Append(node.New(coordinates, rg, gfn))
 		} else {
 			s.Push(
 				rng.NewRange(k, rg.J()), // right

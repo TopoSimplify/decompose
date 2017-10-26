@@ -62,10 +62,6 @@ func (self *dpTest) Polyline() *pln.Polyline {
 	return self.Pln
 }
 
-func (self *dpTest) Score(coordinates []*geom.Point, rg *rng.Range) (int, float64) {
-	return self.ScoreFn(coordinates, rg)
-}
-
 func linear_coords(wkt string) []*geom.Point{
 	return geom.NewLineStringFromWKT(wkt).Coordinates()
 }
