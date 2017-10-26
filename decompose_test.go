@@ -35,12 +35,12 @@ func TestDecompose(t *testing.T) {
 			var inst   = &dpTest{Pln: pln.New(coords), Opts: options, ScoreFn: offset.MaxOffset}
 
 			inst.Opts.Threshold = 120
-			hulls := DouglasPeucker(inst, scoreRelation, hullGeom)
+			hulls := DouglasPeucker(inst.Polyline(), inst.ScoreFn, scoreRelation, hullGeom)
 
 			g.Assert(hulls.Len()).Equal(4)
 
 			inst.Opts.Threshold = 150
-			hulls = DouglasPeucker(inst, scoreRelation, hullGeom)
+			hulls = DouglasPeucker(inst.Polyline(), inst.ScoreFn, scoreRelation, hullGeom)
 
 			g.Assert(hulls.Len()).Equal(1)
 			h := hulls.Get(0).(*node.Node)
