@@ -29,7 +29,7 @@ func hullGeom(coords []*geom.Point) geom.Geometry {
 
 //Type DP
 type dpTest struct {
-	Id        string
+	id        string
 	Hulls     *deque.Deque
 	Pln       *pln.Polyline
 	Meta      map[string]interface{}
@@ -38,8 +38,20 @@ type dpTest struct {
 	SimpleSet *sset.SSet
 }
 
+func (self *dpTest) Id() string {
+	return self.id
+}
+
 func (self *dpTest) Options() *opts.Opts {
 	return self.Opts
+}
+
+func (self *dpTest) NodeQueue() *deque.Deque {
+	return self.Hulls
+}
+
+func (self *dpTest) Simple() []int {
+	return []int{}
 }
 
 func (self *dpTest) Coordinates() []*geom.Point {
@@ -62,7 +74,8 @@ func create_hulls(indxs [][]int, coords []*geom.Point) []*node.Node {
 	poly := pln.New(coords)
 	hulls := make([]*node.Node, 0)
 	for _, o := range indxs {
-		hulls = append(hulls, node.New(poly, rng.NewRange(o[0], o[1]), hullGeom))
+		r := rng.NewRange(o[0], o[1])
+		hulls = append(hulls, node.New(poly.SubCoordinates(r), r, hullGeom))
 	}
 	return hulls
 }

@@ -23,14 +23,13 @@ func DouglasPeucker(self lnr.Linear, scoreRelation scoreRelationFn, gfn geom.Geo
 	}
 
 	var rg = pln.Range()
-
-	s := stack.NewStack().Push(rg)
+	var s = stack.NewStack().Push(rg)
 
 	for !s.IsEmpty() {
 		rg = s.Pop().(*rng.Range)
 		k, val = self.Score(self, rg)
 		if scoreRelation(val) {
-			hque.Append(node.New(pln, rg, gfn))
+			hque.Append(node.New(pln.SubCoordinates(rg), rg, gfn))
 		} else {
 			s.Push(
 				rng.NewRange(k, rg.J()), // right
