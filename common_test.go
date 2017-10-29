@@ -2,13 +2,11 @@ package decompose
 
 import (
 	"simplex/pln"
-	"simplex/rng"
-	"simplex/node"
+	"simplex/lnr"
+	"simplex/opts"
+	"github.com/intdxdt/sset"
 	"github.com/intdxdt/geom"
 	"github.com/intdxdt/deque"
-	"simplex/opts"
-	"simplex/lnr"
-	"github.com/intdxdt/sset"
 )
 
 //hull geom
@@ -24,8 +22,6 @@ func hullGeom(coords []*geom.Point) geom.Geometry {
 	}
 	return g
 }
-
-
 
 //Type DP
 type dpTest struct {
@@ -60,18 +56,4 @@ func (self *dpTest) Coordinates() []*geom.Point {
 
 func (self *dpTest) Polyline() *pln.Polyline {
 	return self.Pln
-}
-
-func linear_coords(wkt string) []*geom.Point{
-	return geom.NewLineStringFromWKT(wkt).Coordinates()
-}
-
-func create_hulls(indxs [][]int, coords []*geom.Point) []*node.Node {
-	poly := pln.New(coords)
-	hulls := make([]*node.Node, 0)
-	for _, o := range indxs {
-		r := rng.NewRange(o[0], o[1])
-		hulls = append(hulls, node.New(poly.SubCoordinates(r), r, hullGeom))
-	}
-	return hulls
 }
