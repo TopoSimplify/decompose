@@ -4,10 +4,10 @@ import (
     "simplex/rng"
     "simplex/node"
     "simplex/lnr"
+    "simplex/pln"
     "github.com/intdxdt/stack"
     "github.com/intdxdt/geom"
-    "simplex/pln"
-    "simplex/nque"
+    "github.com/intdxdt/deque"
 )
 
 type scoreRelationFn func(float64) bool
@@ -18,11 +18,11 @@ func DouglasPeucker(
     scoreFn lnr.ScoreFn,
     scoreRelation scoreRelationFn,
     gfn geom.GeometryFn,
-) *nque.Queue {
+) *deque.Deque {
     var k int
     var val float64
     var coordinates []*geom.Point
-    var hque = nque.NewQueue()
+    var hque = deque.NewDeque()
 
     if pln == nil {
         return hque
