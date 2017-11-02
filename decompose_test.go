@@ -3,7 +3,6 @@ package decompose
 import (
 	"testing"
 	"simplex/opts"
-	"simplex/node"
 	"simplex/offset"
 	"github.com/intdxdt/geom"
 	"github.com/franela/goblin"
@@ -35,18 +34,17 @@ func TestDecompose(t *testing.T) {
 			var inst = &dpTest{Pln: pln.New(coords), Opts: options, ScoreFn: offset.MaxOffset}
 			var poly *pln.Polyline
 			var hulls = DouglasPeucker(poly, inst.ScoreFn, scoreRelation, hullGeom)
-			g.Assert(hulls.Len()).Equal(0)
+			g.Assert(len(hulls)).Equal(0)
 
 			inst.Opts.Threshold = 120
 			hulls = DouglasPeucker(inst.Polyline(), inst.ScoreFn, scoreRelation, hullGeom)
-			g.Assert(hulls.Len()).Equal(4)
+			g.Assert(len(hulls)).Equal(4)
 
 			inst.Opts.Threshold = 150
 			hulls = DouglasPeucker(inst.Polyline(), inst.ScoreFn, scoreRelation, hullGeom)
 
-			g.Assert(hulls.Len()).Equal(1)
-			h := hulls.Get(0).(*node.Node)
-			g.Assert(h.Range.AsSlice()).Equal([]int{0, len(coords) - 1})
+			g.Assert(len(hulls)).Equal(1)
+			g.Assert(hulls[0].Range.AsSlice()).Equal([]int{0, len(coords) - 1})
 		})
 	})
 }
