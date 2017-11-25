@@ -11,7 +11,7 @@ import (
 
 type scoreRelationFn func(float64) bool
 
-//Douglas Peucker decomposition at a given threshold
+//Douglas-Peucker decomposition at a given threshold
 func DouglasPeucker(
 	pln *pln.Polyline,
 	scoreFn lnr.ScoreFn,
@@ -40,8 +40,8 @@ func DouglasPeucker(
 			hque = append(hque, node.New(coordinates, rg, gfn))
 		} else {
 			s.Push(
-				rng.NewRange(k, rg.J()), // right
-				rng.NewRange(rg.I(), k), // left
+				rng.NewRange(k, rg.J), // right
+				rng.NewRange(rg.I, k), // left
 			)
 		}
 	}
