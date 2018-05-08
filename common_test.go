@@ -1,12 +1,12 @@
 package decompose
 
 import (
-	"simplex/pln"
-	"simplex/lnr"
-	"simplex/opts"
 	"github.com/intdxdt/sset"
 	"github.com/intdxdt/geom"
 	"github.com/intdxdt/deque"
+	"github.com/TopoSimplify/pln"
+	"github.com/TopoSimplify/lnr"
+	"github.com/TopoSimplify/opts"
 )
 
 //hull geom

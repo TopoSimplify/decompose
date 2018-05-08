@@ -2,9 +2,9 @@ package decompose
 
 import (
 	"testing"
-	"simplex/pln"
-	"simplex/opts"
-	"simplex/offset"
+	"github.com/TopoSimplify/pln"
+	"github.com/TopoSimplify/opts"
+	"github.com/TopoSimplify/offset"
 	"github.com/intdxdt/geom"
 	"github.com/franela/goblin"
 )

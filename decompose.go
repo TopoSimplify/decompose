@@ -1,10 +1,10 @@
 package decompose
 
 import (
-	"simplex/rng"
-	"simplex/node"
-	"simplex/lnr"
-	"simplex/pln"
+	"github.com/TopoSimplify/rng"
+	"github.com/TopoSimplify/node"
+	"github.com/TopoSimplify/lnr"
+	"github.com/TopoSimplify/pln"
 	"github.com/intdxdt/stack"
 	"github.com/intdxdt/geom"
 )
