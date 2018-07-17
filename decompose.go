@@ -5,7 +5,6 @@ import (
 	"github.com/TopoSimplify/node"
 	"github.com/TopoSimplify/lnr"
 	"github.com/TopoSimplify/pln"
-	"github.com/intdxdt/stack"
 	"github.com/intdxdt/geom"
 )
 
@@ -13,36 +12,36 @@ type scoreRelationFn func(float64) bool
 
 //Douglas-Peucker decomposition at a given threshold
 func DouglasPeucker(
-	pln *pln.Polyline,
-	scoreFn lnr.ScoreFn,
-	scoreRelation scoreRelationFn,
-	gfn geom.GeometryFn,
+	pln *pln.Polyline, scoreFn lnr.ScoreFn,
+	scoreRelation scoreRelationFn, geomFn geom.GeometryFn,
 ) []*node.Node {
-	var k int
+	var k, n int
 	var val float64
-	var coordinates []*geom.Point
+	var coordinates []geom.Point
 	var hque []*node.Node
 
 	if pln == nil {
 		return hque
 	}
 
-	var rg = pln.Range()
-	var s = stack.NewStack().Push(rg)
+	var r = pln.Range()
+	var stack = make([]rng.Rng, 0, (r.J-r.I)+1)
+	stack = append(stack, r)
 
-	for !s.IsEmpty() {
-		rg = s.Pop().(*rng.Range)
-		coordinates = pln.SubCoordinates(rg)
+	for !(len(stack) == 0) {
+		n = len(stack) - 1
+		r = stack[n]
+		stack = stack[:n]
+
+		coordinates = pln.SubCoordinates(r)
 		k, val = scoreFn(coordinates)
-		k = rg.Index(k)
+		k = r.I + k //offset
 
 		if scoreRelation(val) {
-			hque = append(hque, node.New(coordinates, rg, gfn))
+			hque = append(hque, node.New(coordinates, r, geomFn))
 		} else {
-			s.Push(
-				rng.NewRange(k, rg.J), // right
-				rng.NewRange(rg.I, k), // left
-			)
+			stack = append(stack, rng.Range(k, r.J)) // right
+			stack = append(stack, rng.Range(r.I, k)) // left
 		}
 	}
 	return hque

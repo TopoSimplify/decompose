@@ -7,6 +7,7 @@ import (
 	"github.com/TopoSimplify/offset"
 	"github.com/intdxdt/geom"
 	"github.com/franela/goblin"
+	"time"
 )
 
 func TestDecompose(t *testing.T) {
@@ -14,7 +15,8 @@ func TestDecompose(t *testing.T) {
 
 	g.Describe("hull decomposition", func() {
 		g.It("should test decomposition of a line", func() {
-			options := &opts.Opts{
+			g.Timeout(1*time.Hour)
+			var options = &opts.Opts{
 				Threshold:              50.0,
 				MinDist:                20.0,
 				RelaxDist:              30.0,

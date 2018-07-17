@@ -10,7 +10,7 @@ import (
 )
 
 //hull geom
-func hullGeom(coords []*geom.Point) geom.Geometry {
+func hullGeom(coords []geom.Point) geom.Geometry {
 	var g geom.Geometry
 
 	if len(coords) > 2 {
@@ -18,7 +18,7 @@ func hullGeom(coords []*geom.Point) geom.Geometry {
 	} else if len(coords) == 2 {
 		g = geom.NewLineString(coords)
 	} else {
-		g = coords[0].Clone()
+		g = coords[0]
 	}
 	return g
 }
@@ -50,7 +50,7 @@ func (self *dpTest) Simple() []int {
 	return []int{}
 }
 
-func (self *dpTest) Coordinates() []*geom.Point {
+func (self *dpTest) Coordinates() []geom.Point {
 	return self.Pln.Coordinates
 }
 
