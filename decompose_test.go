@@ -8,14 +8,16 @@ import (
 	"github.com/intdxdt/geom"
 	"github.com/franela/goblin"
 	"time"
+	"github.com/intdxdt/iter"
 )
 
 func TestDecompose(t *testing.T) {
 	var g = goblin.Goblin(t)
-
+	var id = iter.NewIntGen(0)
 	g.Describe("hull decomposition", func() {
 		g.It("should test decomposition of a line", func() {
-			g.Timeout(1*time.Hour)
+
+			g.Timeout(1 * time.Hour)
 			var options = &opts.Opts{
 				Threshold:              50.0,
 				MinDist:                20.0,
@@ -35,15 +37,15 @@ func TestDecompose(t *testing.T) {
 			var coords = geom.NewLineStringFromWKT(wkt).Coordinates()
 			var poly *pln.Polyline
 			var inst = &dpTest{Pln: pln.New(coords), Opts: options, ScoreFn: offset.MaxOffset}
-			var hulls = DouglasPeucker(poly, inst.ScoreFn, scoreRelation, hullGeom)
+			var hulls = DouglasPeucker(id, poly, inst.ScoreFn, scoreRelation, hullGeom)
 			g.Assert(len(hulls)).Equal(0)
 
 			inst.Opts.Threshold = 120
-			hulls = DouglasPeucker(inst.Polyline(), inst.ScoreFn, scoreRelation, hullGeom)
+			hulls = DouglasPeucker(id, inst.Polyline(), inst.ScoreFn, scoreRelation, hullGeom)
 			g.Assert(len(hulls)).Equal(4)
 
 			inst.Opts.Threshold = 150
-			hulls = DouglasPeucker(inst.Polyline(), inst.ScoreFn, scoreRelation, hullGeom)
+			hulls = DouglasPeucker(id, inst.Polyline(), inst.ScoreFn, scoreRelation, hullGeom)
 
 			g.Assert(len(hulls)).Equal(1)
 			g.Assert(hulls[0].Range.AsSlice()).Equal([]int{0, len(coords) - 1})
