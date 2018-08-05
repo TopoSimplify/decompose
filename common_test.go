@@ -10,15 +10,15 @@ import (
 )
 
 //hull geom
-func hullGeom(coords []geom.Point) geom.Geometry {
+func hullGeom(coords geom.Coords) geom.Geometry {
 	var g geom.Geometry
-
-	if len(coords) > 2 {
+	var n = coords.Len()
+	if  n > 2 {
 		g = geom.NewPolygon(coords)
-	} else if len(coords) == 2 {
+	} else if n == 2 {
 		g = geom.NewLineString(coords)
 	} else {
-		g = coords[0]
+		g = coords.Pt(0)
 	}
 	return g
 }
@@ -50,7 +50,7 @@ func (self *dpTest) Simple() []int {
 	return []int{}
 }
 
-func (self *dpTest) Coordinates() []geom.Point {
+func (self *dpTest) Coordinates() geom.Coords {
 	return self.Pln.Coordinates
 }
 

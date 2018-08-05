@@ -13,13 +13,13 @@ type scoreRelationFn func(float64) bool
 
 //Douglas-Peucker decomposition at a given threshold
 func DouglasPeucker(
-	id *iter.IntGen,
+	id *iter.Igen,
 	pln *pln.Polyline, scoreFn lnr.ScoreFn,
 	scoreRelation scoreRelationFn, geomFn geom.GeometryFn,
 ) []node.Node {
 	var k, n int
 	var val float64
-	var coordinates []geom.Point
+	var coordinates geom.Coords
 	var hque []node.Node
 
 	if pln == nil {
