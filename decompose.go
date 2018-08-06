@@ -15,7 +15,7 @@ type scoreRelationFn func(float64) bool
 func DouglasPeucker(
 	id *iter.Igen,
 	pln *pln.Polyline, scoreFn lnr.ScoreFn,
-	scoreRelation scoreRelationFn, geomFn geom.GeometryFn,
+	scoreRelation scoreRelationFn, geomFn func(geom.Coords) geom.Geometry,
 ) []node.Node {
 	var k, n int
 	var val float64
