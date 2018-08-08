@@ -27,7 +27,7 @@ func hullGeom(coords geom.Coords) geom.Geometry {
 type dpTest struct {
 	id        string
 	Hulls     *deque.Deque
-	Pln       *pln.Polyline
+	Pln       pln.Polyline
 	Meta      map[string]interface{}
 	Opts      *opts.Opts
 	ScoreFn   lnr.ScoreFn
@@ -54,6 +54,6 @@ func (self *dpTest) Coordinates() geom.Coords {
 	return self.Pln.Coordinates
 }
 
-func (self *dpTest) Polyline() *pln.Polyline {
+func (self *dpTest) Polyline() pln.Polyline {
 	return self.Pln
 }
