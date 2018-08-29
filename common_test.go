@@ -13,7 +13,7 @@ import (
 func hullGeom(coords geom.Coords) geom.Geometry {
 	var g geom.Geometry
 	var n = coords.Len()
-	if  n > 2 {
+	if n > 2 {
 		g = geom.NewPolygon(coords)
 	} else if n == 2 {
 		g = geom.NewLineString(coords)
@@ -25,7 +25,7 @@ func hullGeom(coords geom.Coords) geom.Geometry {
 
 //Type DP
 type dpTest struct {
-	id        string
+	id        int
 	Hulls     *deque.Deque
 	Pln       pln.Polyline
 	Meta      map[string]interface{}
@@ -34,7 +34,7 @@ type dpTest struct {
 	SimpleSet *sset.SSet
 }
 
-func (self *dpTest) Id() string {
+func (self *dpTest) Id() int {
 	return self.id
 }
 

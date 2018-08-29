@@ -36,16 +36,21 @@ func TestDecompose(t *testing.T) {
 			var wkt = "LINESTRING ( 470 480, 470 450, 490 430, 520 420, 540 440, 560 430, 580 420, 590 410, 630 400, 630 430, 640 460, 630 490, 630 520, 640 540, 660 560, 690 580, 700 600, 730 600, 750 570, 780 560, 790 550, 800 520, 830 500, 840 480, 850 460, 900 440, 920 440, 950 480, 990 480, 1000 520, 1000 570, 990 600, 1010 620, 1060 600 )"
 			var coords = geom.NewLineStringFromWKT(wkt).Coordinates
 			var poly = pln.Polyline{}
-			var inst = &dpTest{Pln: pln.CreatePolyline(coords), Opts: options, ScoreFn: offset.MaxOffset}
-			var hulls = DouglasPeucker(id, poly, inst.ScoreFn, scoreRelation, hullGeom)
+			var inst = &dpTest{
+				Pln:     pln.CreatePolyline(coords),
+				Opts:    options,
+				ScoreFn: offset.MaxOffset,
+			}
+
+			var hulls = DouglasPeucker(id, poly, inst.ScoreFn, scoreRelation, hullGeom, inst)
 			g.Assert(len(hulls)).Equal(0)
 
 			inst.Opts.Threshold = 120
-			hulls = DouglasPeucker(id, inst.Polyline(), inst.ScoreFn, scoreRelation, hullGeom)
+			hulls = DouglasPeucker(id, inst.Polyline(), inst.ScoreFn, scoreRelation, hullGeom, inst)
 			g.Assert(len(hulls)).Equal(4)
 
 			inst.Opts.Threshold = 150
-			hulls = DouglasPeucker(id, inst.Polyline(), inst.ScoreFn, scoreRelation, hullGeom)
+			hulls = DouglasPeucker(id, inst.Polyline(), inst.ScoreFn, scoreRelation, hullGeom, inst)
 
 			g.Assert(len(hulls)).Equal(1)
 			g.Assert(hulls[0].Range.AsSlice()).Equal([]int{0, coords.Len() - 1})

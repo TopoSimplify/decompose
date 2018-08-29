@@ -13,8 +13,12 @@ type scoreRelationFn func(float64) bool
 
 //Douglas-Peucker decomposition at a given threshold
 func DouglasPeucker(
-	id *iter.Igen, pln pln.Polyline, scoreFn lnr.ScoreFn,
-	scoreRelation scoreRelationFn, geomFn func(geom.Coords)geom.Geometry,
+	id *iter.Igen,
+	pln pln.Polyline,
+	scoreFn lnr.ScoreFn,
+	scoreRelation scoreRelationFn,
+	geomFn func(geom.Coords)geom.Geometry,
+	instance lnr.Linegen,
 ) []node.Node {
 	var k, n int
 	var val float64
@@ -39,7 +43,7 @@ func DouglasPeucker(
 		k = r.I + k //offset
 
 		if scoreRelation(val) {
-			hque = append(hque, node.CreateNode(id, coordinates, r, geomFn))
+			hque = append(hque, node.CreateNode(id, coordinates, r, geomFn, instance))
 		} else {
 			stack = append(stack, rng.Range(k, r.J)) // right
 			stack = append(stack, rng.Range(r.I, k)) // left
