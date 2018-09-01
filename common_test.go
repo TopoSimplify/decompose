@@ -7,6 +7,7 @@ import (
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/lnr"
 	"github.com/TopoSimplify/opts"
+	"github.com/TopoSimplify/state"
 )
 
 //hull geom
@@ -36,6 +37,11 @@ type dpTest struct {
 
 func (self *dpTest) Id() int {
 	return self.id
+}
+
+func (self *dpTest) State() *state.State {
+	var s state.State
+	return &s
 }
 
 func (self *dpTest) Options() *opts.Opts {
