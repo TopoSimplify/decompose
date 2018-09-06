@@ -7,17 +7,15 @@ import (
 	"github.com/TopoSimplify/pln"
 	"github.com/intdxdt/geom"
 	"github.com/intdxdt/iter"
+	"github.com/TopoSimplify/offset"
 )
-
-type scoreRelationFn func(float64) bool
 
 //Douglas-Peucker decomposition at a given threshold
 func DouglasPeucker(
 	id *iter.Igen,
 	pln pln.Polyline,
-	scoreFn lnr.ScoreFn,
-	scoreRelation scoreRelationFn,
-	geomFn func(geom.Coords)geom.Geometry,
+	decomp offset.EpsilonDecomposition,
+	geomFn func(geom.Coords) geom.Geometry,
 	instance lnr.Linegen,
 ) []node.Node {
 	var k, n int
@@ -39,10 +37,10 @@ func DouglasPeucker(
 		stack = stack[:n]
 
 		coordinates = pln.SubCoordinates(r)
-		k, val = scoreFn(coordinates)
+		k, val = decomp.ScoreFn(coordinates)
 		k = r.I + k //offset
 
-		if scoreRelation(val) {
+		if decomp.Relation(val) {
 			hque = append(hque, node.CreateNode(id, coordinates, r, geomFn, instance))
 		} else {
 			stack = append(stack, rng.Range(k, r.J)) // right
