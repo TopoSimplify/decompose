@@ -1,13 +1,13 @@
 package decompose
 
 import (
-	"github.com/TopoSimplify/rng"
-	"github.com/TopoSimplify/node"
 	"github.com/TopoSimplify/lnr"
+	"github.com/TopoSimplify/node"
+	"github.com/TopoSimplify/offset"
 	"github.com/TopoSimplify/pln"
+	"github.com/TopoSimplify/rng"
 	"github.com/intdxdt/geom"
 	"github.com/intdxdt/iter"
-	"github.com/TopoSimplify/offset"
 )
 
 //Douglas-Peucker decomposition at a given threshold
