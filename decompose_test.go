@@ -1,14 +1,14 @@
 package decompose
 
 import (
-	"testing"
-	"github.com/TopoSimplify/pln"
-	"github.com/TopoSimplify/opts"
 	"github.com/TopoSimplify/offset"
-	"github.com/intdxdt/geom"
+	"github.com/TopoSimplify/opts"
+	"github.com/TopoSimplify/pln"
 	"github.com/franela/goblin"
-	"time"
+	"github.com/intdxdt/geom"
 	"github.com/intdxdt/iter"
+	"testing"
+	"time"
 )
 
 func TestDecompose(t *testing.T) {
